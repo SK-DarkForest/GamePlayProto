@@ -7,11 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    BoxCollider2D collider2d;
-    private void Start()
-    {
-        
-    }
 
     
     public void Enter_PlayMode ()
@@ -39,13 +34,6 @@ public class GameManager : MonoBehaviour
     }
     public void Load_Base ()
     {
-
         SceneManager.LoadScene("BaseScene");
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("Collided");
-        Load_Base();
     }
 }

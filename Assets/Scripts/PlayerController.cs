@@ -11,19 +11,24 @@ public class PlayerController : MonoBehaviour
 {
     public float verticalInput;
     public float horizontalInput;
-    public float speed = 100.0f;
+    public float speed = 5.0f;
+    private bool isCollided;
     Animator animator;
     private SpriteRenderer spriteRenderer;
+    private Vector3 currentPosition;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+
+
+    void Update()
     {
         walk();
         flip_Character();
@@ -34,9 +39,10 @@ public class PlayerController : MonoBehaviour
             verticalInput = Input.GetAxis("Vertical");
             horizontalInput = Input.GetAxis("Horizontal");
 
-            transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
-            transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
-        
+            //transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
+            //transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
+            rb.velocity = (Vector2.up * verticalInput);
+            rb.velocity = (Vector2.right * horizontalInput);
         // Animation
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
         {
@@ -45,7 +51,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetBool("is_Running", false);
-            
+
         }
     }
 
@@ -62,5 +68,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
+    public void Load_Base()
+    {
+        SceneManager.LoadScene("BaseScene");
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("BaseEntry"))
+        {
+            Debug.Log("Collided");
+            Load_Base();
+        }
+        else if (other.CompareTag("BaseBorder"))
+        {
+            Debug.Log("Border!");
+            isCollided = true;
+        }
+    }
 }
