@@ -15,8 +15,10 @@ public class PlayerController : MonoBehaviour
     private bool isCollided;
     Animator animator;
     private SpriteRenderer spriteRenderer;
-    private Vector3 currentPosition;
+    private Vector3 lastFramePos;
     private Rigidbody2D rb;
+    private float lastVerticalInput;
+    private float lastHorizontalInput;
 
     // Start is called before the first frame update
     void Start()
@@ -28,21 +30,35 @@ public class PlayerController : MonoBehaviour
 
 
 
-    void Update()
+    void FixedUpdate()
     {
-        walk();
-        flip_Character();
+        if (!isCollided)
+        {
+            walk();
+            flip_Character();
+        } 
+        else
+        {
+            isCollided = false;
+            Debug.Log("Success");
+        }
+        
+    }
+
+    void LateUpdate()
+    {
+        lastFramePos = transform.position;
+        lastVerticalInput = verticalInput;
+        lastHorizontalInput = horizontalInput;
     }
 
     void walk()
     {
-            verticalInput = Input.GetAxis("Vertical");
-            horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
 
-            //transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
-            //transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
-            rb.velocity = (Vector2.up * verticalInput);
-            rb.velocity = (Vector2.right * horizontalInput);
+        transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
+        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
         // Animation
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
         {
