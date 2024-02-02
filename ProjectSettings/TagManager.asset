@@ -6,6 +6,8 @@ TagManager:
   tags:
   - BaseEntry
   - BaseBorder
+  - EnterBase
+  - Canvas
   layers:
   - Default
   - TransparentFX

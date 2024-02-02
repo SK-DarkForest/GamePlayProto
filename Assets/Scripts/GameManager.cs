@@ -32,7 +32,15 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("1");
     }
-    public void Load_Base ()
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            LoadBase();
+        }
+    }
+    public void LoadBase ()
     {
         SceneManager.LoadScene("BaseScene");
     }

@@ -83,23 +83,4 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-    public void Load_Base()
-    {
-        SceneManager.LoadScene("BaseScene");
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("BaseEntry"))
-        {
-            Debug.Log("Collided");
-            Load_Base();
-        }
-        else if (other.CompareTag("BaseBorder"))
-        {
-            Debug.Log("Border!");
-            isCollided = true;
-        }
-    }
 }
